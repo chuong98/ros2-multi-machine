@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  teleop:
+    image: osrf/ros:humble-desktop
+    container_name: ros2-humble
+    network_mode: host
+    stdin_open: true
+    tty: true
+    env_file:
+      - ../common.env
+    volumes:
+      - ./entrypoint.sh:/entrypoint.sh
+    command: bash /entrypoint.sh

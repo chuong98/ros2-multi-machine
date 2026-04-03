@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  turtlesim:
+    image: osrf/ros:humble-desktop
+    container_name: ro2-humble
+    network_mode: host
+    env_file:
+      - ../common.env
+    volumes:
+      - ./entrypoint.sh:/entrypoint.sh
+    command: bash /entrypoint.sh
