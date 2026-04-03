@@ -1,8 +1,9 @@
-version: "3.9"
-
 services:
   teleop:
-    image: osrf/ros:humble-desktop
+    build:
+      context: .
+      dockerfile: Dockerfile.humble
+    image: ros2-humble:foxglove
     container_name: ros2-humble
     network_mode: host
     stdin_open: true
