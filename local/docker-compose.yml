@@ -4,12 +4,17 @@ services:
       context: .
       dockerfile: Dockerfile.humble
     image: ros2-humble:foxglove
-    container_name: ros2-humble
+    container_name: humble
     network_mode: host
     stdin_open: true
     tty: true
     env_file:
       - ../common.env
-    volumes:
-      - ./entrypoint.sh:/entrypoint.sh
-    command: bash /entrypoint.sh
+    environment:
+      - DISPLAY=${DISPLAY:-host.docker.internal:0}
+      - QT_X11_NO_MITSHM=1
+    # volumes:
+    #   - ./entrypoint.sh:/entrypoint.sh
+    #   - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    #   - ${HOME}/.Xauthority:/root/.Xauthority:ro
+    # command: bash /entrypoint.sh

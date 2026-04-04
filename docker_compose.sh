@@ -9,6 +9,7 @@ detect_platform() {
 
     if [[ "$os" == "Darwin" ]]; then
         echo "local"
+        xhost +localhost
         return
     fi
 

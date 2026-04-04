@@ -1,0 +1,1 @@
+docker run --rm -it -p 8765:8765 ros2-humble:foxglove ros2 launch foxglove_bridge foxglove_bridge_launch.xm
