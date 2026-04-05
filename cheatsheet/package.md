@@ -92,7 +92,7 @@ entry_points={
 ### 5. Build the package and source the workspace:
 ```bash
 cd ~/ros2_ws
-colcon build --packages-select py_package
+colcon build --packages-select py_package --symlink-install
 source install/setup.bash
 ```
 After build and source, you can run the nodes from the CLI:
@@ -241,3 +241,45 @@ Check that the generated message and service Python modules are available:
 ros2 interface show msg_package/msg/Sphere
 ros2 interface show msg_package/srv/CheckSphereOverlap
 ```
+
+## IV. Create Parameter Package
+All the steps are similar to the publisher-subscriber example, except:
+- Step 2: you create a node that declares and uses parameters.
+- Step 3: the dependencies in `package.xml` also include `rclpy` and `rcl_interfaces` for parameter APIs.
+- Step 4: the console script in `setup.py` will be updated to point to the new parameter node.
+
+## Step 2. Create a node that declares and uses parameters in `src/param_package/`:
+<details>
+<summary>py_package/src/minimal_parameter.py</summary>
+
+```python
+# param_node.py
+import rclpy
+from rclpy.node import Node
+
+class MinimalParam(Node):
+    def __init__(self):
+        super().__init__('minimal_param_node')
+        self.declare_parameter('my_param', 'default_value')
+        self.timer = self.create_timer(1, self.timer_callback)
+
+    def timer_callback(self):
+        my_param = self.get_parameter('my_parameter')
+        self.get_logger().info(f'my param value: {my_param.get_param_value().string_value}')
+        new_param = rclpy.parameter.Parameter(
+            'my_parameter',
+            rclpy.Parameter.Type.STRING,
+            'I modified Value'
+            )
+        all_new_params = [new_param]
+        self.set_parameters(all_new_params)
+
+def main():
+    rclpy.init()
+    node = MinimalParam()
+    rclpy.spin(node)
+
+if __name__ == '__main__':
+    main()
+```
+<details>

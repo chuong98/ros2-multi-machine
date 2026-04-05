@@ -24,6 +24,18 @@
 | `ros2 node list` | List currently running nodes. | `ros2 node list` |
 | `ros2 node info <node_name>` | Show publishers, subscribers, services, and actions for a node. | `ros2 node info /turtlesim` |
 
+## Parameters
+- Parameters are node-level configuration values that can be read and updated at runtime.
+
+| Syntax | Explanation | Example |
+| --- | --- | --- |
+| `ros2 param list` | List parameters available on running nodes. | `ros2 param list` |
+| `ros2 param get <node_name> <parameter_name>` | Get the current value of a parameter. | `ros2 param get /minimal_param_node my_param` |
+| `ros2 param set <node_name> <parameter_name> <value>` | Set a parameter value on a running node. | `ros2 param set /minimal_param_node my_param earth` |
+| `ros2 param describe <node_name> <parameter_name>` | Show type and descriptor info for a parameter. | `ros2 param describe /minimal_param_node my_param` |
+| `ros2 param dump <node_name>` | Export a node's parameters to YAML. | `ros2 param dump /minimal_param_node` |
+| `ros2 param load <node_name> <yaml_file>` | Load parameters from a YAML file into a running node. | `ros2 param load /minimal_param_node params.yaml` |
+
 ## Topic
 - One node publishes messages to a topic, and other nodes subscribe to that topic to receive the messages. 
 - Topics are used for unidirectional, asynchronous communication between nodes.
