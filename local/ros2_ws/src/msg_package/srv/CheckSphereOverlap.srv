@@ -1,0 +1,4 @@
+msg_package/Sphere a
+msg_package/Sphere b
+---
+bool overlap

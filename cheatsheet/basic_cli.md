@@ -6,6 +6,7 @@
 | --- | --- | --- |
 | `ros2 --version` | Show the installed ROS2 CLI version. | `ros2 --version` |
 | `ros2 launch <package_name> <launch_file>` | Start one or more nodes from a launch file. | `ros2 launch turtlesim multisim.launch.py` |
+| `ros2 doctor` | Check the health of your ROS2 installation and environment. | `ros2 doctor` |
 
 ## Package
 
@@ -61,6 +62,7 @@
 | Syntax | Explanation | Example |
 | --- | --- | --- |
 | `ros2 interface list` | List all available message, service, and action interfaces. | `ros2 interface list` |
+| `ros2 interface package <package_name>` | List all available message, service, and action interfaces in a specific package. | `ros2 interface package example_interfaces` |
 | `ros2 interface show <interface_type>` | Show the definition of a message, service, or action type. | `ros2 interface show geometry_msgs/msg/Twist` |
 
 ## Workspace
