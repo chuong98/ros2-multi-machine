@@ -4,9 +4,10 @@
 
 | Syntax | Explanation | Example |
 | --- | --- | --- |
-| `ros2 --version` | Show the installed ROS2 CLI version. | `ros2 --version` |
-| `ros2 launch <package_name> <launch_file>` | Start one or more nodes from a launch file. | `ros2 launch turtlesim multisim.launch.py` |
+| `echo $ROS_DISTRO` | Show the installed ROS2 distribution. | `echo $ROS_DISTRO` |
 | `ros2 doctor` | Check the health of your ROS2 installation and environment. | `ros2 doctor` |
+| `colcon build` | Build packages in the current ROS2 workspace. | `colcon build --symlink-install` |
+| `source install/setup.bash` | Source the workspace so built packages are available in the shell. | `source install/setup.bash` |
 
 ## Package
 
@@ -77,9 +78,3 @@
 | `ros2 interface package <package_name>` | List all available message, service, and action interfaces in a specific package. | `ros2 interface package example_interfaces` |
 | `ros2 interface show <interface_type>` | Show the definition of a message, service, or action type. | `ros2 interface show geometry_msgs/msg/Twist` |
 
-## Workspace
-
-| Syntax | Explanation | Example |
-| --- | --- | --- |
-| `colcon build` | Build packages in the current ROS2 workspace. | `colcon build --symlink-install` |
-| `source install/setup.bash` | Source the workspace so built packages are available in the shell. | `source install/setup.bash` |

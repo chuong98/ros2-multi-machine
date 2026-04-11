@@ -1,0 +1,9 @@
+# Goal
+geometry_msgs/Point target
+float64 speed
+---
+# Result
+bool success
+---
+# Feedback
+float64 distance_remaining

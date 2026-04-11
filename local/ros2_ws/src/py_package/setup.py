@@ -28,7 +28,8 @@ setup(
             'listener = py_package.minimal_subscriber:main',
             'add_ints_service = py_package.minimal_service:main',
             'add_ints_client = py_package.minimal_client:main',
-            'mini_param_node = py_package.minimal_parameter:main'
+            'mini_param_node = py_package.minimal_parameter:main',
+            'fibonacci_action_server= py_package.fibonacci_action_server:main'
         ],
     },
 )
