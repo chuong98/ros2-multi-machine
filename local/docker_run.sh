@@ -2,7 +2,7 @@
 set -euo pipefail
 
 IMAGE_NAME="${1:-ros2-humble:foxglove}"
-CONTAINER_NAME="${CONTAINER_NAME:-ros}"
+CONTAINER_NAME="${CONTAINER_NAME:-ros-humble}"
 
 xhost +localhost
 docker run --rm -it -d \

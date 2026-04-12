@@ -3,8 +3,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.humble
-    image: ros2-humble:foxglove
-    container_name: humble
+      args:
+        ROS_DISTRO: ${ROS_DISTRO:-humble}
+    image: ros2-${ROS_DISTRO:-humble}:foxglove
+    container_name: ${ROS_DISTRO:-humble}
     network_mode: host
     stdin_open: true
     tty: true
