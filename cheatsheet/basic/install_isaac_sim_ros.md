@@ -1,6 +1,7 @@
-# SETUP ISAAC-SIM and ISAAC ROS with DOCKER
+# SETUP ISAAC-SIM and ISAAC ROS with DOCKER for REMOTE DEVELOPMENT
 
-## 1. ISAAC-SIM
+## 1. ISAAC-SIM on Remote Server
+
 Reference: https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/install_container.html 
 
 Steps: 
@@ -36,7 +37,7 @@ docker exec -it isaac-sim bash
 6. Turn WebRTC on your remote server
 Select the IP address of your remote server, e.g. 192.168.120.111.
 Make sure the port 49100 is forwarded with VScode.
-## 2. ISAAC ROS
+## 2. ISAAC ROS on Remote Server
 
 Use `isaac-ros-cli` to build and run ROS packages in the container. Reference: `https://github.com/NVIDIA-ISAAC-ROS/isaac-ros-cli`
 1. Install `isaac-ros-cli` on your local machine:
@@ -63,4 +64,25 @@ source ~/.zshrc
 sudo isaac-ros init <docker|venv|baremetal> # choose one of the 3 options
 # Activate environment
 isaac-ros activate
+```
+
+## 3. Local Development with ROS Docker Container
+1. Build the ROS docker image with the following command:
+```bash
+cd local
+# Default (humble)
+docker compose build
+
+# Jazzy
+ROS_DISTRO=jazzy docker compose build
+```
+
+2. Run the ROS docker container with the following command:
+```bash
+cd local
+# Default (humble)
+./docker_run.sh
+
+# Jazzy
+./docker_run.sh ros2-jazzy:foxglove ros-jazzy
 ```
