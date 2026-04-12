@@ -9,10 +9,10 @@ run `colcon build` in the root of your workspace to build all packages. After bu
 
 | Syntax | Explanation | Example |
 | --- | --- | --- |
-| `colcon build --packages-select <package_name>` | Build one package only. | `colcon build --packages-select my_robot_pkg` |
-| `colcon build --symlink-install` | Build all packages with symlink install (good for development). | `colcon build --symlink-install` |
-| `source install/setup.bash` | Source built workspace so packages are discoverable. | `source install/setup.bash` |
 | `ros2 pkg create --build-type ament_python/ament_cmake --license Apache-2.0 <package_name>` | Create a new ROS package with Python/C++ build type. This must run at `src` folder. | `ros2 pkg create --build-type ament_python --license Apache-2.0 my_robot_pkg` |
+| `colcon build --packages-select <package_name>` | Build one package only. | `colcon build --packages-select my_robot_pkg` |
+| `colcon build --symlink-install` | Build all packages with symlink install (good for development). | `colcon build --packages-select <python_pkg> --symlink-install` |
+| `source install/setup.bash` | Source built workspace so packages are discoverable. | `source install/setup.bash` |
 
 
 ## Inspect Rosdep

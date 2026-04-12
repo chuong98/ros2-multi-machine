@@ -1,6 +1,5 @@
 import rclpy
 from rclpy.node import Node
-from rclpy.action.client import ClientGoalHandle
 from rclpy.action import ActionClient
 from msg_package.action import Fibonacci
 
@@ -19,7 +18,8 @@ class FibonacciActionClient(Node):
 
         # this is to get the update while waiting
         goal_future = self._action_client.send_goal_async(goal_msg)
-        goal_future.add_done_callback(self.goal_response_callback)
+        if goal_future is not None:
+            goal_future.add_done_callback(self.goal_response_callback)
     
     def goal_response_callback(self, future):
         goal_handler =future.result()
@@ -28,8 +28,9 @@ class FibonacciActionClient(Node):
             return
 
         self.get_logger().info('Goal Accepted :)')
-        # result_future = goal_handler.get_result_async()
-        # result_future.add_done_callback(self.get_result_callback)
+        result_future = goal_handler.get_result_async()
+        if result_future is not None:
+            result_future.add_done_callback(self.get_result_callback)
 
     def get_result_callback(self, future):
         result = future.result().result
@@ -39,9 +40,9 @@ class FibonacciActionClient(Node):
 def main():
     rclpy.init()
     action_client = FibonacciActionClient()
-    future = action_client.send_goal(10)
-
-    rclpy.spin_until_future_complete(action_client, future)
+    action_client.send_goal(10)
+    rclpy.spin(action_client)
+    # rclpy.spin_until_future_complete(action_client, future)
 
 if __name__ == '__main__':
     main()

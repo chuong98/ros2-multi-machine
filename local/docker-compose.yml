@@ -2,7 +2,7 @@ services:
   teleop:
     build:
       context: .
-      dockerfile: Dockerfile.humble
+      dockerfile: Dockerfile
       args:
         ROS_DISTRO: ${ROS_DISTRO:-humble}
     image: ros2-${ROS_DISTRO:-humble}:foxglove

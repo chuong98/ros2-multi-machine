@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-IMAGE_NAME="${1:-ros2-humble:foxglove}"
-CONTAINER_NAME="${2:-ros-humble}"
+IMAGE_NAME="${1:-ros2-jazzy:foxglove}"
+CONTAINER_NAME="${2:-ros-jazzy}"
 
 xhost +localhost
 docker run --rm -it -d \

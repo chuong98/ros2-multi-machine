@@ -5,9 +5,21 @@ ARG USERNAME=chuongnguyen
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
-# Create the user
-RUN groupadd --gid $USER_GID $USERNAME
-RUN useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
+# Detect if user/group exists; rename existing UID/GID entries or create new ones
+RUN if ! getent group $USER_GID > /dev/null 2>&1; then \
+        groupadd --gid $USER_GID $USERNAME; \
+    else \
+        groupmod -n $USERNAME $(getent group $USER_GID | cut -d: -f1) 2>/dev/null || true; \
+    fi
+RUN if id -u $USERNAME > /dev/null 2>&1; then \
+        echo "User $USERNAME already exists"; \
+    elif getent passwd $USER_UID > /dev/null 2>&1; then \
+        EXISTING=$(getent passwd $USER_UID | cut -d: -f1) \
+        && usermod -l $USERNAME -d /home/$USERNAME -m "$EXISTING"; \
+    else \
+        useradd --uid $USER_UID --gid $USER_GID -m $USERNAME; \
+    fi
+RUN mkdir -p /home/$USERNAME && chown $USER_UID:$USER_GID /home/$USERNAME
 #
 # [Optional] Add sudo support. Omit if you don't need to install software after connecting.
 RUN apt-get update && apt-get install -y sudo \
@@ -15,7 +27,7 @@ RUN apt-get update && apt-get install -y sudo \
     && chmod 0440 /etc/sudoers.d/$USERNAME \
     && apt-get upgrade -y \
     && apt-get install -y \
-        ament-cmake \
+        ros-${ROS_DISTRO}-ament-cmake \
         ccls \
         python3-colcon-common-extensions \
         python3-pip \

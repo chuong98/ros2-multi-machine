@@ -14,7 +14,7 @@
 | Syntax | Explanation | Example |
 | --- | --- | --- |
 | `ros2 pkg list` | List all available ROS2 packages in the environment. | `ros2 pkg list` |
-| `ros2 pkg create <package_name> --build-type ament_python` | Create a new ROS2 package. | `ros2 pkg create my_robot_pkg --build-type ament_python` |
+| `ros2 pkg create <package_name> --build-type ament_python --license <license_name>` | Create a new ROS2 package. | `ros2 pkg create my_robot_pkg --build-type ament_python --license Apache-2.0` |
 | `ros2 pkg executables <package_name>` | List executables provided by a package. | `ros2 pkg executables turtlesim` |
 
 ## Node
@@ -25,17 +25,15 @@
 | `ros2 node list` | List currently running nodes. | `ros2 node list` |
 | `ros2 node info <node_name>` | Show publishers, subscribers, services, and actions for a node. | `ros2 node info /turtlesim` |
 
-## Parameters
-- Parameters are node-level configuration values that can be read and updated at runtime.
+## Launch
 
 | Syntax | Explanation | Example |
 | --- | --- | --- |
-| `ros2 param list` | List parameters available on running nodes. | `ros2 param list` |
-| `ros2 param get <node_name> <parameter_name>` | Get the current value of a parameter. | `ros2 param get /minimal_param_node my_param` |
-| `ros2 param set <node_name> <parameter_name> <value>` | Set a parameter value on a running node. | `ros2 param set /minimal_param_node my_param earth` |
-| `ros2 param describe <node_name> <parameter_name>` | Show type and descriptor info for a parameter. | `ros2 param describe /minimal_param_node my_param` |
-| `ros2 param dump <node_name>` | Export a node's parameters to YAML. | `ros2 param dump /minimal_param_node` |
-| `ros2 param load <node_name> <yaml_file>` | Load parameters from a YAML file into a running node. | `ros2 param load /minimal_param_node params.yaml` |
+| `ros2 launch <package_name> <launch_file>` | Launch one or more nodes from a launch file. | `ros2 launch foxglove_bridge foxglove_bridge_launch.xml` |
+| `ros2 launch <package_name> <launch_file> --show-args` | Show available launch arguments for a launch file. | `ros2 launch py_package fibonacci_action.launch.py --show-args` |
+| `ros2 launch <package_name> <launch_file> <arg_name>:=<value>` | Pass launch arguments from the command line. | `ros2 launch turtlesim multisim.launch.py use_sim_time:=true` |
+| `ros2 launch <package_name> <launch_file> --debug` | Run launch with debug logging to troubleshoot startup issues. | `ros2 launch py_package fibonacci_action.launch.py --debug` |
+
 
 ## Topic
 - One node publishes messages to a topic, and other nodes subscribe to that topic to receive the messages. 
@@ -49,6 +47,13 @@
 | `ros2 topic pub <topic_name> <msg_type> <data>` | Publish a message to a topic from the CLI. | `ros2 topic pub /chatter std_msgs/msg/String "{data: 'hello'}"` |
 | `ros2 topic info <topic_name>` | Show publishers, subscribers, and type information for a topic. | `ros2 topic info /turtle1/cmd_vel` |
 | `ros2 topic hz <topic_name>` | Measure how fast messages are being published on a topic. | `ros2 topic hz /turtle1/pose` |
+
+- Record, publish topic by `yml` file 
+
+| Syntax | Explanation | Example |
+| --- | --- | --- |
+| `ros2 topic echo --once <topic_name> > <yaml_file.yml>` | Save a message published on a topic to a YAML file. | `ros2 topic echo --once /turtle1/pose > pose.yaml` |
+| `ros2 topic pub <topic_name> <msg_type> --yaml-file <yaml_file.yml>` | Publish messages to a topic from a YAML file. | `ros2 topic pub /turtle1/pose geometry_msgs/msg/Pose --yaml-file pose.yaml` |
 
 ## Service
 - A service consists of a request and a response. One node offers a service, and other nodes can call that service to send a request and receive a response. 
@@ -70,7 +75,9 @@
 | `ros2 action info <action_name>` | Show the action type and connected endpoints. | `ros2 action info /fibonacci` |
 | `ros2 action send_goal <action_name> <action_type> <goal>` | Send a goal to an action server from the CLI. | `ros2 action send_goal /fibonacci example_interfaces/action/Fibonacci "{order: 10}"` |
 
-## Interface
+## Interface of Message, Service, Action
+- ROS2 interfaces define the structure of messages, services, and actions that nodes use to communicate. 
+- They are defined in `.msg`, `.srv`, and `.action` files.
 
 | Syntax | Explanation | Example |
 | --- | --- | --- |
@@ -78,3 +85,15 @@
 | `ros2 interface package <package_name>` | List all available message, service, and action interfaces in a specific package. | `ros2 interface package example_interfaces` |
 | `ros2 interface show <interface_type>` | Show the definition of a message, service, or action type. | `ros2 interface show geometry_msgs/msg/Twist` |
 
+
+## Parameters
+- Parameters are node-level configuration values that can be read and updated at runtime.
+
+| Syntax | Explanation | Example |
+| --- | --- | --- |
+| `ros2 param list` | List parameters available on running nodes. | `ros2 param list` |
+| `ros2 param get <node_name> <parameter_name>` | Get the current value of a parameter. | `ros2 param get /minimal_param_node my_param` |
+| `ros2 param set <node_name> <parameter_name> <value>` | Set a parameter value on a running node. | `ros2 param set /minimal_param_node my_param earth` |
+| `ros2 param describe <node_name> <parameter_name>` | Show type and descriptor info for a parameter. | `ros2 param describe /minimal_param_node my_param` |
+| `ros2 param dump <node_name>` | Export a node's parameters to YAML. | `ros2 param dump /minimal_param_node` |
+| `ros2 param load <node_name> <yaml_file>` | Load parameters from a YAML file into a running node. | `ros2 param load /minimal_param_node params.yaml` |
