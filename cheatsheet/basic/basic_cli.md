@@ -25,14 +25,14 @@
 | `ros2 node list` | List currently running nodes. | `ros2 node list` |
 | `ros2 node info <node_name>` | Show publishers, subscribers, services, and actions for a node. | `ros2 node info /turtlesim` |
 
-## Launch
+## Launch multiple nodes
 
 | Syntax | Explanation | Example |
 | --- | --- | --- |
-| `ros2 launch <package_name> <launch_file>` | Launch one or more nodes from a launch file. | `ros2 launch foxglove_bridge foxglove_bridge_launch.xml` |
+| `ros2 launch <package_name> <launch_file>` | Launch one or more nodes from a launch file. | `ros2 launch foxglove_bridge foxglove_bridge_launch.xml -n` |
 | `ros2 launch <package_name> <launch_file> --show-args` | Show available launch arguments for a launch file. | `ros2 launch py_package fibonacci_action.launch.py --show-args` |
 | `ros2 launch <package_name> <launch_file> <arg_name>:=<value>` | Pass launch arguments from the command line. | `ros2 launch turtlesim multisim.launch.py use_sim_time:=true` |
-| `ros2 launch <package_name> <launch_file> --debug` | Run launch with debug logging to troubleshoot startup issues. | `ros2 launch py_package fibonacci_action.launch.py --debug` |
+| `ros2 launch -h` | Show the list of available options for launching nodes. -n: noniterative, -d: debug, -p: print, -s: show arguments | `ros2 launch -h` |
 
 
 ## Topic

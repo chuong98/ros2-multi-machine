@@ -26,7 +26,7 @@ ros2 pkg create --build-type ament_python --license Apache-2.0 bring_up
  _launch.yaml is recommended, but not required, as the file suffix for YAML launch files.
 
 ```yaml
-# multi_turtle_launch.yaml 
+# multi_turtle]]_launch.yaml 
 launch:
   - node:
       pkg: "turtlesim"
