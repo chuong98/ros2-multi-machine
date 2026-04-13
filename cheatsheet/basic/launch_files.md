@@ -23,8 +23,10 @@ ros2 pkg create --build-type ament_python --license Apache-2.0 bring_up
 <details>
 <summary> <strong>2. Create a <code>launch</code> folder in the root directory of the package and add a launch file </strong></summary>
 
+ _launch.yaml is recommended, but not required, as the file suffix for YAML launch files.
+
 ```yaml
-# multi_turtle.yml
+# multi_turtle_launch.yaml 
 launch:
   - node:
       pkg: "turtlesim"
@@ -116,3 +118,35 @@ ros2 launch path/to/bring_up/launch/multi_turtle.yml
 since launch files are just YAML files and do not require compilation. However, if you want to use ROS 2 launch features that depend on the package context (e.g. `FindPackageShare`), then you will need to build the package and source the workspace first.
 
 </details>
+
+## II. Using Substitutions in Launch Files
+- Substitutions allow you to reuse the launch files with different parameters or configurations without modifying the default_launch file itself. You can use substitutions to pass arguments, environment variables, or other dynamic values to the nodes being launched.
+
+<details>
+<summary>main_launch.yml</summary>  
+
+```yaml
+launch:
+  - include:
+        file: "${find-pkg-share <package_name>}/launch/<default_launch>.yml"
+        let:
+            - name: "<node_argument>"
+              value: "<argument_value>"
+```
+
+</details>
+
+<details>
+<summary>example of `default_launch.yml`</summary>
+
+```yaml
+launch:
+  - arg:
+        name: "<node_argument>"
+        default: "<default_value>"
+  - node:
+        pkg: "<package_name>"
+        exec: "<node_executable>"
+        name: "<node_name>"
+        args: "--ros-args --param <node_argument>:=<argument_value>"
+```

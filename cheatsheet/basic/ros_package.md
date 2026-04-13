@@ -310,10 +310,12 @@ All the steps are similar to the publisher-subscriber example, except:
 - Step 3: the dependencies in `package.xml` also include `rclpy` and `rcl_interfaces` for parameter APIs.
 - Step 4: the console script in `setup.py` will be updated to point to the new parameter node.
 
-### Step 2. Create a node that declares and uses parameters in `src/param_package/`:
+### Step 2. Create a node that declares and uses parameters in `src/py_package/`:
 
 <details>
 <summary>py_package/src/minimal_parameter.py</summary>
+
+This node declares a parameter `my_parameter` with a default value. It also creates a timer to periodically print the parameter value and update it.
 
 ```python
 # param_node.py
@@ -347,3 +349,41 @@ if __name__ == '__main__':
 ```
 </details>
 
+
+<details>
+<summary>py_package/src/param_monitor.py</summary>
+
+This node uses `ParameterEventHandler` to monitor the parameter change and print the updated value.
+
+```python 
+import rclpy
+from rclpy.node import Node
+from rclpy.executors import ExternalShutdownException
+from rclpy.parameter import Parameter, parameter_value_to_python
+from rclpy.parameter_event_handler import ParameterEventHandler
+
+class ParamMonitor(Node):
+    def __init__(self):
+        super().__init__('param_monitor_node')
+        self.declare_parameter('an_int_param', 0)
+        self.handler = ParameterEventHandler(self)
+
+        self.callback_handle = self.handler.add_parameter_callback(
+            parameter_name='an_int_param',
+            node_name='param_monitor',
+            callback=self.callback
+        )
+
+    def callback(self, p: Parameter):
+        self.get_logger().info(f'Receiving an update to parameter: {p.name}: {parameter_value_to_python(p.value)}')
+
+def main():
+    rclpy.init()
+    node = ParamMonitor()
+    rclpy.spin(node)
+    rclpy.shutdown()
+if __name__ == '__main__':
+    main()
+```
+
+</details>
