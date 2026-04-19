@@ -1,0 +1,30 @@
+launch:
+  - arg:
+      name: "target_frame"
+      default: "turtle1"
+      description: "Target frame name."
+  - node: # Start the turtlesim node turtle1
+      pkg: "turtlesim"
+      exec: "turtlesim_node"
+      name: "sim"
+      output: "screen"
+  - node: # Publish the transformation between the world frame and the turtle1 frame
+      pkg: "my_tf2"
+      exec: "turtle_tf2_broadcaster"
+      name: "broadcaster1"
+      param:
+      - name: "turtle_name"
+        value: "turtle1"
+
+  - node: # Span turtle2, drive turtle3 in a circle, 
+      # and publish its position as PointStamped message to the topic /turtle2/turtle_point_stamped
+      pkg: "my_tf2"
+      exec: "turtle_tf2_msg_broadcaster"
+      name: "message_broadcaster"
+  - node: # Publish the transformation between the world frame and the turtle2 frame
+      pkg: "my_tf2"
+      exec: "turtle_tf2_broadcaster"
+      name: "broadcaster2"
+      param:
+      - name: "turtle_name"
+        value: "turtle3"

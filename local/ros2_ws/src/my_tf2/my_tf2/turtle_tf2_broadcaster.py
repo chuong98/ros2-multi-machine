@@ -1,8 +1,6 @@
-import math
 
 from geometry_msgs.msg import TransformStamped
 
-import numpy as np
 
 import rclpy
 from rclpy.node import Node
@@ -17,7 +15,7 @@ class FramePublisher(Node):
         super().__init__('turtle_tf2_frame_publisher')
 
         # declara parameters
-        self.turtle_name = self.declare_parameter('turtle_name', 'my_turtle').get_parameter_value().string_value
+        self.turtle_name = self.declare_parameter('turtle_name', 'turtle1').get_parameter_value().string_value
 
         self.tf_broadcaster = TransformBroadcaster(self)
         self.subscription = self.create_subscription(Pose, f'/{self.turtle_name}/pose', self.handle_turtle_pose, 1)

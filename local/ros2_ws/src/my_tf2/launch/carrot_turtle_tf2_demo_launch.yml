@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+launch:
+  - include:
+      file: "$(find-pkg-share my_tf2)/launch/turtle_tf2_demo_launch.yml"
+      let:
+      - name: "target_frame"
+        value: "carrot1"
+  - node:
+      pkg: "my_tf2"
+      exec: "carrot_tf2_broadcaster"
+      name: "carrot_broadcaster"
+      param:
+      - name: "target_frame"
+        value: "$(var target_frame)"
+      - name: "target_radius"
+        value: 3.0

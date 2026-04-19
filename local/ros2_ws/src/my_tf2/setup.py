@@ -27,7 +27,11 @@ setup(
     entry_points={
         'console_scripts': [
             'static_tf2_broadcaster = my_tf2.static_tf2_broadcaster:main',
-            'turtle_tf2_broadcaster = my_tf2.dynamic_tf2_broadcaster:main',
+            'turtle_tf2_broadcaster = my_tf2.turtle_tf2_broadcaster:main',
+            'turtle_tf2_listener = my_tf2.turtle_tf2_listener:main',
+            'carrot_tf2_broadcaster = my_tf2.carrot_tf2_broadcaster:main',
+            'turtle_tf2_msg_broadcaster = my_tf2.turtle_tf2_msg_broadcaster:main',
+            'turtle_tf2_msg_filter = my_tf2.turtle_tf2_msg_filter:main',
         ],
     },
 )
